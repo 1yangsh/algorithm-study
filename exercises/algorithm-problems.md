@@ -295,3 +295,47 @@ for i in words:
 print(max(res, key=res.get))
 ```
 
+```python
+# 2. 토지 원고 데이터
+# 1) 저자명 추출
+# 2) 제목 추출
+# 3) 출판사명 추출
+# 4) 인용부호(큰 따옴표)로 묶여있는 내용을 모두 추출하여 리스트에 저장
+# 5) 토지 원고 전체에서 한글에 해당되는 내용만 추출하여 저장, 가장 많이 사용된 단어 100개를 출력
+# 6) 각 장의 제목 저장 및 출력
+
+from bs4 import BeautifulSoup
+import re
+with open('toji.txt', 'r', encoding='UTF-16') as f:
+     html = f.read()
+
+# 1)
+soup = BeautifulSoup(html, 'html.parser')
+author = soup.find('author').text
+print(author)
+
+# 2)
+title = soup.find('title').text
+print(title.split(',')[0])
+
+# 3)
+publisher = soup.find('publisher').text
+print(publisher)
+
+# 5)
+dic = {}
+hangul = re.findall('[\u3131-\u3163\uac00-\ud7a3]+', html)
+for i in hangul:
+    if dic.get(i):
+        dic[i] +=1
+    else:
+        dic[i] = 1
+        
+res = []
+ans = []
+res = sorted(dic, key=dic.get, reverse=True)
+for i in range(100):
+    ans.append(res[i])
+print(ans)
+```
+
