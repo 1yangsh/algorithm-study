@@ -26,4 +26,3 @@ for i in s:
 
 if len(tmp) != 0:
     print(tmp[::-1])
-
