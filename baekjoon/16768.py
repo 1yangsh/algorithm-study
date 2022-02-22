@@ -1,34 +1,28 @@
+
+def new_array(n):
+    return [[False] * 10 for _ in range(n)]
+
 n, k = map(int, input().split())
 
 m = [list(input()) for _ in range(n)]
-visited = [[0] * 10 for _ in range(n)]
 
-def dfs(num, x, y, cnt):
-    visited[x][y] = 1
-    dx = (0, 0, -1, 1)
-    dy = (1, -1, 0, 0)
+ck = new_array[n]
+ck2 = new_array[n]
 
+dx, dy = [0, 1, 0, -1], [1, 0, -1, 0]
+
+def dfs(x, y):
+    ck[x][y] = True
+    ret = 1
     for i in range(4):
-        nx = x + dx[i]
-        ny = y + dy[i]
-
-        if nx < 0 or ny < 0 or nx >= n or ny >= 10:
+        xx, yy = x + dx[i], y + dy[i]
+        if xx < 0  or yy < 0 or xx >= n or yy >= 10:
             continue
-        elif m[nx][ny] == num:
-            cnt += 1
-            dfs(num, nx, ny, cnt)
+        if ck[xx][yy] or m[x] != m[xx][yy]:
+            continue
+        ret += dfs(xx, yy)
+    return ret
 
-    return cnt
-
-
-for i in range(n):
-    for j in range(10):
-        cnt = 0
-        if m[i][j] != 0 and visited[i][j] == 0:
-            num = dfs(m[i,j], i, j, cnt)
-
-            if num >= 3:
-                pass
 
 
 
